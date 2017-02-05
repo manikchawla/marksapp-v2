@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout-icon"></div>
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout__title">MarksApp</span>
+          <div class="mdl-layout-spacer"></div>
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href="{% url 'marks:home' %}">Home</a>
+            <a class="mdl-navigation__link" href="#">About</a>
+            <a class="mdl-navigation__link" href="{% url 'marks:logout' %}">Logout</a>
+          </nav>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer mdl-layout--small-screen-only">
+    <span class="mdl-layout__title">Marksapp</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="{% url 'marks:home' %}">Home</a>
+      <a class="mdl-navigation__link" href="#">About</a>
+      <a class="mdl-navigation__link" href="{% url 'marks:logout' %}">Logout</a>
+    </nav>
+    </div>
+{% endblock %}
+
+{% block page-content %}
+
+<div class="mdl-grid">
+    <div class="mdl-cell-12-col centered">
+        <form action="submit_marks" method="POST">{% csrf_token %}
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+            <tr>
+                <th class="mdl-data-table__cell--non-numeric">Roll No</th>
+                <th class="mdl-data-table__cell--non-numeric">Name</th>
+                {% if exam_type == 'first_sessional' %}
+                <th class="mdl-data-table__cell--non-numeric">First Sessional</th>
+                {% elif exam_type == 'second_sessional' %}
+                <th class="mdl-data-table__cell--non-numeric">Second Sessional</th>
+                {% elif exam_type == 'internal_assessment' %}
+                <th class="mdl-data-table__cell--non-numeric">Internal Assessment</th>
+                {% endif %}
+            </tr>
+            <input type="hidden" name="batch_subject_id" value="{{ batch_subject_id }}">
+            <input type="hidden" name="exam_type" value="{{ exam_type }}">
+            {% for student_marks in student_marks_list %}
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric"><span>{{ student_marks.student.roll_no }}</span></td>
+                <td class="mdl-data-table__cell--non-numeric"><span>{{ student_marks.student.name }}</span></td>
+                <td class="mdl-data-table__cell--non-numeric">
+                    <div class="mdl-textfield mdl-js-textfield marks-field">
+                        {% if exam_type == 'first_sessional' %}
+                        <input class="mdl-textfield__input" type="text" name="{{ student_marks.student.roll_no }}" value="{{ student_marks.marks.first_sessional|default_if_none:"" }}">
+                        {% elif exam_type == 'second_sessional' %}
+                        <input class="mdl-textfield__input" type="text" name="{{ student_marks.student.roll_no }}" value="{{ student_marks.marks.second_sessional|default_if_none:"" }}">
+                        {% elif exam_type == 'internal_assessment' %}
+                        <input class="mdl-textfield__input" type="text" name="{{ student_marks.student.roll_no }}" value="{{ student_marks.marks.internal_assessment|default_if_none:"" }}">
+                        {% endif %}
+                    </div>
+                </td>
+                <!-- <td class="mdl-data-table__cell--non-numeric">
+                    <div class="mdl-textfield mdl-js-textfield marks-field">
+                        <input class="mdl-textfield__input" type="text" name="{{ student_marks.roll_no }}_ss" value="{{ student_marks.marks.second_sessional|default_if_none:"" }}">
+                    </div>
+                </td>
+                <td class="mdl-data-table__cell--non-numeric">
+                    <div class="mdl-textfield mdl-js-textfield marks-field">
+                        <input class="mdl-textfield__input" type="text"  name="{{ student_marks.roll_no }}_ia" value="{{ student_marks.marks.internal_assessment|default_if_none:"" }}">
+                    </div>
+                </td> -->
+            </tr>
+            {% endfor %}
+            </table>
+            <br>
+            <button class="mdl-button mdl-js-button mdl-button--raised submit-marks">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

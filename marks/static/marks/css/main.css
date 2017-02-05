@@ -1,0 +1,154 @@
+
+.centered {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.area-item.mdl-card {
+  max-width: 320px;
+  min-width: 280px;
+  height: 320px;
+}
+
+.area-item > .mdl-card__title {
+  color: #fff;
+  background: bottom right 15% no-repeat rgb(96,125,139);
+}
+
+.mdl-grid {
+  margin-top: 50px;
+} 
+
+.login-form.mdl-card {
+  max-width: 280px;
+  min-width: 280px;
+  height: 300px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.card-icon {
+  font-size: 900%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .card-grid {
+    margin-top: 150px;
+    margin-right: 200px;
+    margin-left: 200px;
+  }
+}
+
+/* FIle Input*/
+
+.mdl-button--file input {
+  cursor: pointer;
+  height: 100%;
+  right: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 300px;
+  z-index: 4;
+}
+
+.mdl-textfield--file .mdl-textfield__input {
+  box-sizing: border-box;
+  width: calc(100% - 32px);
+}
+.mdl-textfield--file .mdl-button--file {
+  right: 0;
+}
+
+/* Choose Subject Select */
+
+/* ==========  Select Field Variables ========== */
+/* ==========  Select Field ========== */
+/* Style Select Field */
+select {
+  font-family: inherit;
+  background-color: transparent;
+  width: 100%;
+  padding: 4px 0;
+  font-size: 16px;
+  color: rgba(0,0,0, 0.26);
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0, 0.12);
+}
+
+/* Remove focus */
+select:focus {
+  outline: none;
+}
+
+/* Hide label */
+.mdl-selectfield label {
+  display: none;
+}
+
+/* Use custom arrow */
+.mdl-selectfield select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+.mdl-selectfield {
+  font-family: 'Roboto','Helvetica','Arial',sans-serif;
+  position: relative;
+}
+.mdl-selectfield:after {
+  position: absolute;
+  top: 0.75em;
+  right: 0.5em;
+  /* Styling the down arrow */
+  width: 0;
+  height: 0;
+  padding: 0;
+  content: '';
+  border-left: .25em solid transparent;
+  border-right: .25em solid transparent;
+  border-top: 0.375em solid rgba(0,0,0, 0.12);
+  pointer-events: none;
+}
+
+/* ==========  Demo CSS ========== */
+
+.demo {
+  width: 200px;
+  padding: 20px;
+  margin: 0 auto;
+  top: 50%;
+  margin-top: -2em;
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+
+
+.submit-marks {
+  float: right;
+}
+
+.marks-field {
+  width: 100px;
+}
+
+/* footer-bottom */
+/*
+.myfooter {
+  width: 100%;
+  position: absolute;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  bottom: 0;
+}
+
+.wrapper {
+  position: relative;
+}
+*/

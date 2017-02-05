@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout-icon"></div>
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout__title">MarksApp</span>
+          <div class="mdl-layout-spacer"></div>
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href="{% url 'marks:home' %}">Home</a>
+            <a class="mdl-navigation__link" href="#">About</a>
+            <a class="mdl-navigation__link" href="{% url 'marks:logout' %}">Logout</a>
+          </nav>
+        </div>
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+          <a href="#teacher-tab" class="mdl-layout__tab is-active">Teacher</a>
+          {% if is_coordinator %}
+          <a href="#coordinator-tab" class="mdl-layout__tab">Coordinator</a>
+          {% endif %}
+        </div>
+    </header>
+    <div class="mdl-layout__drawer mdl-layout--small-screen-only">
+    <span class="mdl-layout__title">Marksapp</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="{% url 'marks:home' %}">Home</a>
+      <a class="mdl-navigation__link" href="#">About</a>
+      <a class="mdl-navigation__link" href="{% url 'marks:logout' %}">Logout</a>
+    </nav>
+    </div>
+{% endblock %}
+
+{% block page-content %}
+
+<section class="mdl-layout__tab-panel is-active" id="teacher-tab">
+  <div class="mdl-grid">
+    <div class="page-content mdl-cell mdl-cell--4-col mdl-cell--4-col-phone centered">
+    <h5>Hi, {{ teacher.name }}</h5>
+      <form action="{% url 'marks:edit_marks' %}" method="POST">{% csrf_token %}
+          <div class="mdl-selectfield mdl-js-selectfield">
+            <select id="batch-subject-id" name="batch_subject_id" class="browser-default subject-select">
+                <option value="" disabled selected>Select your batch and subject</option>
+                {% for bs in batch_subject %} 
+                <option value="{{ bs.id }}" type="text">{{ bs.batch }} -- {{ bs.subject }}</option>
+                {% endfor %}
+            </select>
+            <label class="mdl-selectfield__label" for="batch-subject-id">Select Subject</label>
+          </div>
+    
+        <div class="mdl-selectfield mdl-js-selectfield">
+            <select name="exam_type" class="browser-default exam-select">
+                <option value="" disabled selected>Select exam</option>
+                <option value="first_sessional">First Sessional</option>
+                <option value="second_sessional">Second Sessional</option>
+                <option value="internal_assessment">Internal Assessment</option>
+            </select>
+            <label class="mdl-selectfield__label" for="exam_type">Select Exam</label>
+        </div>
+          <button type="submit" class="mdl-button mdl-js-button mdl-button--raised">Next</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% if is_coordinator %}
+<section class="mdl-layout__tab-panel" id="coordinator-tab">
+  <div class="mdl-grid">
+    <div class="page-content mdl-cell mdl-cell--4-col mdl-cell--4-col-phone centered">
+    <h5>Batch: {{ coordinator_batch }}</h5>
+    <form action="{% url 'marks:view_marks' %}" method="POST">{% csrf_token %}
+      <div class="mdl-selectfield mdl-js-selectfield">
+        <label class="subject-label" for="subject">Select Exam</label>
+        <select name="exam_type" class="browser-default exam-select">
+            <option value="" disabled selected>Choose exam</option>
+            <option value="first_sessional">First Sessional</option>
+            <option value="second_sessional">Second Sessional</option>
+            <option value="total_internal_marks">Total Internal Marks</option>
+        </select>
+      </div>
+      <input type="hidden" name="batch" value="{{ coordinator_batch }}">
+        <br>
+        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised">Next</button>
+    </form>
+    </div>
+  </div>
+</section>
+{% endif %}
+   
+{% endblock %}

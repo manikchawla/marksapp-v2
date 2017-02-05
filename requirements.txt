@@ -1,0 +1,10 @@
+Django==1.9.2
+django-excel==0.0.4
+jdcal==1.2
+openpyxl==2.2.2
+pyexcel==0.2.0
+pyexcel-io==0.1.0
+pyexcel-webio==0.0.6
+pyexcel-xlsx==0.1.0
+texttable==0.8.4
+wheel==0.24.0
